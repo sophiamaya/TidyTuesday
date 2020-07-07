@@ -13,6 +13,10 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidytuesdayR)
 library(tidyverse)
 library(ggplot2)
+library(sf)
+theme_set(
+  theme_void()
+  )
 ```
 
 ```{r}
@@ -27,11 +31,34 @@ ratings_tidy <- coffee_ratings %>%
   select(country_of_origin, total_cup_points) %>%
   group_by(country_of_origin) %>%
   summarize(average_rating = mean(total_cup_points)) %>%
-  drop_na(country_of_origin)
+  drop_na(country_of_origin) %>%
+  mutate(region = country_of_origin)
 
 View(ratings_tidy)
 ```
 
 ```{r}
-plot <- ggplot()
+library(maps)
+
+world_map <- map_data("world")
+ggplot(world_map, aes(x = long, y = lat, group = group)) +
+  geom_polygon(fill="lightgray", colour = "white")
 ```
+
+```{r}
+world_map <- map_data("world")
+rating.map <- left_join(ratings_tidy, world_map, by = "region")
+
+Create the choropleth map. Note that, data are missing for some region in the map below:
+Use the function geom_polygon():
+
+ggplot(rating.map, aes(long, lat, group = group))+
+  geom_polygon(aes(fill = average_rating ), color = "white")+
+  scale_fill_viridis_c(option = "C")
+
+ggplot(rating.map, aes(map_id = region, fill = average_rating))+
+  geom_map(map = rating.map,  color = "white")+
+  expand_limits(x = rating.map$long, y = rating.map$lat)+
+  scale_fill_viridis_c(option = "C")
+```
+
