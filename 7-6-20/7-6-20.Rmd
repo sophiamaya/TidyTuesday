@@ -60,12 +60,17 @@ view(full_joined)
 ```{r}
 world_map <- map_data("world")
 rating.map <- left_join(full_joined, world_map, by = "region")
+```
 
+```{r}
 ggplot(rating.map, aes(map_id = region, fill = average_rating))+
   geom_map(map = rating.map,  color = "white")+
   expand_limits(x = rating.map$long, y = rating.map$lat)+
-  scale_fill_viridis_c(option = "C")
-
-##now fill empty areas
+  scale_fill_gradient( low = "wheat", high = "sienna4",
+  #space = "Lab",
+  na.value = "grey50") +
+  labs(title ="Title", subtitle = "Average cup points by county", fill="Series") +
+  theme(plot.title = element_text(hjust = 0.5, size = 25, color="Purple")) +
+  theme(plot.subtitle = element_text(hjust = 0.5, face = "italic", color="violet", size = 15))
 ```
 
