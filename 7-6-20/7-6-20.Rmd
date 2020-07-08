@@ -38,8 +38,28 @@ View(ratings_tidy)
 ```
 
 ```{r}
+countries <- map_data("world")
+
+countries_tidy <- countries %>% 
+  select(region) %>%
+  distinct(region)
+  
+    
+View(countries_tidy)
+```
+
+```{r}
+full_joined <- left_join(countries_tidy, ratings_tidy, by = "region")
+
+full_joined <- full_joined %>% 
+  select(-country_of_origin) 
+
+view(full_joined)
+```
+
+```{r}
 world_map <- map_data("world")
-rating.map <- left_join(ratings_tidy, world_map, by = "region")
+rating.map <- left_join(full_joined, world_map, by = "region")
 
 ggplot(rating.map, aes(map_id = region, fill = average_rating))+
   geom_map(map = rating.map,  color = "white")+
@@ -48,3 +68,4 @@ ggplot(rating.map, aes(map_id = region, fill = average_rating))+
 
 ##now fill empty areas
 ```
+
