@@ -72,9 +72,9 @@ map <- ggplot(rating.map, aes(map_id = region, fill = average_rating))+
   #space = "Lab",
   na.value = "grey50") +
   theme_void()+
-  labs(title ="Title", subtitle = "Average cup points by county", fill="Series") +
-  theme(plot.title = element_text(hjust = 0.5, size = 25, color="Purple")) +
-  theme(plot.subtitle = element_text(hjust = 0.5, face = "italic", color="violet", size = 15))
+  labs(title ="Where is the CoffeE?", subtitle = "Average cup points by county", fill="Series") +
+  theme(plot.title = element_text(hjust = 0.5, size = 25, color="darkgreen")) +
+  theme(plot.subtitle = element_text(hjust = 0.5, face = "italic", color="darkgreen", size = 15))
 
 map
 ```
@@ -88,14 +88,13 @@ best_rated
 ```
 
 ```{r}
-bar <- ggplot(best_rated, aes(x= reorder(region, average_rating), y=average_rating), fill= "Brown") +
-  geom_col() +
+bar <- ggplot(best_rated, aes(x= reorder(region, average_rating), y=average_rating)) +
+  geom_col(fill = "sienna4") +
   coord_flip(ylim=c(82, 86)) +
   theme_minimal() +
-  labs(title ="Top Countries", subtitle = "Average cup points by county", fill="Series") +
-  theme(plot.title = element_text(hjust = 0.5, size = 25, color="DarkGreen")) +
-  theme(plot.subtitle = element_text(hjust = 0.5, face = "italic", color="Green", size = 15))+
-  theme(plot.background = element_rect(fill = "blanchedalmond"))
+  labs(subtitle = "Top Countries", fill="Series") +
+  theme(plot.subtitle = element_text(hjust = 0.5, color="darkgreen", size = 15))
+# +theme(plot.background = element_rect(fill = "blanchedalmond"))
 
 
 bar
