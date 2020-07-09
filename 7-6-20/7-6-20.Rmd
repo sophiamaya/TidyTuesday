@@ -14,6 +14,8 @@ library(tidytuesdayR)
 library(tidyverse)
 library(ggplot2)
 library(sf)
+library(patchwork)
+
 theme_set(
   theme_classic()
   )
@@ -79,17 +81,34 @@ map
 
 ```{r}
 best_rated <- ratings_tidy %>%
-  arrange(desc(average_rating))%>%
-  slice(1:5)
+  arrange(desc(average_rating)) %>%
+  slice(1:10)
 
-View(best_rated)
+best_rated
 ```
 
 ```{r}
-bar <- ggplot(ratings_tidy, aes(x=region, y=average_rating)) +
+bar <- ggplot(best_rated, aes(x= reorder(region, average_rating), y=average_rating), fill= "Brown") +
   geom_col() +
-  coord_flip()
+  coord_flip(ylim=c(82, 86)) +
+  theme_minimal() +
+  labs(title ="Top Countries", subtitle = "Average cup points by county", fill="Series") +
+  theme(plot.title = element_text(hjust = 0.5, size = 25, color="DarkGreen")) +
+  theme(plot.subtitle = element_text(hjust = 0.5, face = "italic", color="Green", size = 15))+
+  theme(plot.background = element_rect(fill = "blanchedalmond"))
+
 
 bar
+```
+
+```{r}
+layout <- '
+AAAB
+AAAB
+'
+map + bar + plot_layout(design = layout)
+
+#map/ (bar + bar)
+
 ```
 
