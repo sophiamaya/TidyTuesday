@@ -15,7 +15,7 @@ library(tidyverse)
 library(ggplot2)
 library(sf)
 theme_set(
-  theme_void()
+  theme_classic()
   )
 ```
 
@@ -63,14 +63,33 @@ rating.map <- left_join(full_joined, world_map, by = "region")
 ```
 
 ```{r}
-ggplot(rating.map, aes(map_id = region, fill = average_rating))+
+map <- ggplot(rating.map, aes(map_id = region, fill = average_rating))+
   geom_map(map = rating.map,  color = "white")+
   expand_limits(x = rating.map$long, y = rating.map$lat)+
   scale_fill_gradient( low = "wheat", high = "sienna4",
   #space = "Lab",
   na.value = "grey50") +
+  theme_void()+
   labs(title ="Title", subtitle = "Average cup points by county", fill="Series") +
   theme(plot.title = element_text(hjust = 0.5, size = 25, color="Purple")) +
   theme(plot.subtitle = element_text(hjust = 0.5, face = "italic", color="violet", size = 15))
+
+map
+```
+
+```{r}
+best_rated <- ratings_tidy %>%
+  arrange(desc(average_rating))%>%
+  slice(1:5)
+
+View(best_rated)
+```
+
+```{r}
+bar <- ggplot(ratings_tidy, aes(x=region, y=average_rating)) +
+  geom_col() +
+  coord_flip()
+
+bar
 ```
 
