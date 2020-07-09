@@ -15,16 +15,11 @@ library(tidyverse)
 library(ggplot2)
 library(sf)
 library(patchwork)
-
-theme_set(
-  theme_classic()
-  )
 ```
 
 ```{r}
 tuesdata <- tidytuesdayR::tt_load('2020-07-07')
 tuesdata <- tidytuesdayR::tt_load(2020, week = 28)
-
 coffee_ratings <- tuesdata$coffee_ratings
 ```
 
@@ -35,19 +30,6 @@ ratings_tidy <- coffee_ratings %>%
   summarize(average_rating = mean(total_cup_points)) %>%
   drop_na(country_of_origin) %>%
   mutate(region = country_of_origin)
-
-View(ratings_tidy)
-```
-
-```{r}
-countries <- map_data("world")
-
-countries_tidy <- countries %>% 
-  select(region) %>%
-  distinct(region)
-  
-    
-View(countries_tidy)
 ```
 
 ```{r}
@@ -55,8 +37,6 @@ full_joined <- left_join(countries_tidy, ratings_tidy, by = "region")
 
 full_joined <- full_joined %>% 
   select(-country_of_origin) 
-
-view(full_joined)
 ```
 
 ```{r}
@@ -69,35 +49,27 @@ map <- ggplot(rating.map, aes(map_id = region, fill = average_rating))+
   geom_map(map = rating.map,  color = "white")+
   expand_limits(x = rating.map$long, y = rating.map$lat)+
   scale_fill_gradient( low = "wheat", high = "sienna4",
-  #space = "Lab",
   na.value = "grey50") +
   theme_void()+
-  labs(title ="Where is the CoffeE?", subtitle = "Average cup points by county", fill="Series") +
+  labs(title ="Where is the Best Coffee?", subtitle = "Average cup points per county", fill="Series") +
   theme(plot.title = element_text(hjust = 0.5, size = 25, color="darkgreen")) +
-  theme(plot.subtitle = element_text(hjust = 0.5, face = "italic", color="darkgreen", size = 15))
-
-map
+  theme(plot.subtitle = element_text(color="darkolivegreen", size = 14))
 ```
 
 ```{r}
 best_rated <- ratings_tidy %>%
   arrange(desc(average_rating)) %>%
   slice(1:10)
-
-best_rated
 ```
 
 ```{r}
 bar <- ggplot(best_rated, aes(x= reorder(region, average_rating), y=average_rating)) +
-  geom_col(fill = "sienna4") +
+  geom_col(fill = "peru") +
   coord_flip(ylim=c(82, 86)) +
   theme_minimal() +
-  labs(subtitle = "Top Countries", fill="Series") +
-  theme(plot.subtitle = element_text(hjust = 0.5, color="darkgreen", size = 15))
-# +theme(plot.background = element_rect(fill = "blanchedalmond"))
-
-
-bar
+  labs(subtitle = "Top Ranking Countries", fill="Rating") +
+  theme(plot.subtitle = element_text(hjust = 0.5, color="darkolivegreen", size = 13)) +
+  theme(axis.title.x=element_blank(), axis.title.y=element_blank())
 ```
 
 ```{r}
@@ -106,8 +78,5 @@ AAAB
 AAAB
 '
 map + bar + plot_layout(design = layout)
-
-#map/ (bar + bar)
-
 ```
 
