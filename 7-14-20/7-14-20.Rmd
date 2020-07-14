@@ -1,0 +1,26 @@
+---
+title: "7-14-20"
+author: "Sophia Foster"
+date: "7/13/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+library(ggplot2)
+library(sf)
+library(patchwork)
+```
+
+```{r}
+tuesdata <- tidytuesdayR::tt_load('2020-07-14')
+tuesdata <- tidytuesdayR::tt_load(2020, week = 29)
+
+astronauts <- tuesdata$astronauts
+```
+
