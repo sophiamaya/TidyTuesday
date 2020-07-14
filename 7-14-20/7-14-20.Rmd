@@ -24,3 +24,19 @@ tuesdata <- tidytuesdayR::tt_load(2020, week = 29)
 astronauts <- tuesdata$astronauts
 ```
 
+```{r}
+ggplot(astronauts, aes(x=military_civilian, y=year_of_selection))+
+  geom_point()
+```
+
+```{r}
+#make graphs of 
+sex
+nationality
+age at selection (year of birth -year of selection)
+occupation
+civilian vs military
+
+#combine
+```
+
