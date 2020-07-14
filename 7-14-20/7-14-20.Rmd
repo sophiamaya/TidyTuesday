@@ -25,18 +25,27 @@ astronauts <- tuesdata$astronauts
 ```
 
 ```{r}
-ggplot(astronauts, aes(x=military_civilian, y=year_of_selection))+
-  geom_point()
+countries_most <- astronauts_tidy %>%
+  group_by(nationality) %>%
+  summarise(n= n_distinct(name))%>%
+  arrange(desc(n)) %>%
+  slice(1:8)
+
+top_countries <- countries_most$nationality
+
+astronauts_tidy <- astronauts %>%
+  mutate(age_of_selection = year_of_selection - year_of_birth) %>%
+  distinct(name, .keep_all = TRUE)
+
+#%>%
+ # recode(top_countries, "other")
 ```
 
 ```{r}
-#make graphs of 
-sex
-nationality
-age at selection (year of birth -year of selection)
-occupation
-civilian vs military
+ggplot(astronauts_tidy, aes(x=year_of_selection, y=age_of_selection, color = sex))+
+  geom_point()+
+  facet_wrap(~nationality)
 
-#combine
+#limit to only the most common nationalitie with others recoded as "other"
 ```
 
