@@ -25,17 +25,22 @@ astronauts <- tuesdata$astronauts
 ```
 
 ```{r}
-countries_most <- astronauts_tidy %>%
+countries_most <- astronauts %>%
   group_by(nationality) %>%
   summarise(n= n_distinct(name))%>%
   arrange(desc(n)) %>%
-  slice(1:8)
+  slice(1:4)
 
 top_countries <- countries_most$nationality
 
 astronauts_tidy <- astronauts %>%
   mutate(age_of_selection = year_of_selection - year_of_birth) %>%
   distinct(name, .keep_all = TRUE)
+#%>%
+ # recode(nationality != "U.S." && nationality!="U.S.S.R/Russia", "Other")
+
+#%>%
+ # filter(nationality %in% top_countries)
 
 #%>%
  # recode(top_countries, "other")
