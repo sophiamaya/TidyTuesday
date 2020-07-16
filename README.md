@@ -8,6 +8,6 @@ Date from https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2
 
 ## TidyTuesday.7.7.20
 
-![](7-7-60/coffee.png)
+![](7-6-20/coffee.png)
 
 Date from https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-07-07
