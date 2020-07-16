@@ -49,10 +49,10 @@ colors <- c("gold", "deepskyblue")
 
 ggplot(astronauts_tidy, aes(x=year_of_selection, y=age_of_selection, color = sex))+
   geom_point()+
+  theme_minimal()+
   facet_wrap(~nationality)+
   scale_color_manual(values = colors)+
-  theme_minimal()+
-  labs(title ="Who Goes to Space?", subtitle = "Age and gender over time for astronauts from the leading countries in space", Color="Sex", x="Year of Selection", y="Age of Selection")+
+  labs(title ="Who Goes to Space?", subtitle = "Age and gender over time for astronauts from the world's leading countries in space", color="Sex:", x="Year of Selection", y="Age of Selection")+
   theme(plot.subtitle = element_text(hjust = 0.5, face = "italic", color="white", size = 15))+
   theme(plot.title = element_text(hjust = 0.5, size = 25, color="white"))+
   theme(plot.background = element_rect(fill = "black"))+
@@ -60,8 +60,7 @@ ggplot(astronauts_tidy, aes(x=year_of_selection, y=age_of_selection, color = sex
   legend.text = element_text(color = "white"))+
   theme(axis.title.x = element_text(colour = "white"),
         axis.title.y = element_text(colour = "white"))+
-  theme(axis.text = element_text(colour = "white"))
-
-#limit to only the most common nationalitie with others recoded as "other"
+  theme(axis.text = element_text(colour = "white"))+
+  theme(strip.text = element_text(colour = 'white', size=14))
 ```
 
