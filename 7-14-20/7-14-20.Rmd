@@ -45,9 +45,9 @@ ggplot(astronauts_tidy, aes(x=year_of_selection, y=age_of_selection, color = sex
   theme_minimal()+
   facet_wrap(~nationality)+
   scale_color_manual(values = colors)+
-  labs(title ="Who Goes to Space?", subtitle = "Age and gender over time for astronauts from the world's leading countries in space", color="Sex:", x="Year of Selection", y="Age of Selection")+
-  theme(plot.title = element_text(size = 25, face="bold", color="orangered"))+
-  theme(plot.subtitle = element_text(hjust = 0.5, face = "italic", color="wheat", size = 15))+
+  labs(title ="Who Goes to Space?", subtitle = "Age and gender over time for astronauts from the world's leaders countries in space", color="Sex:", x="Year of Selection", y="Age of Selection")+
+  theme(plot.title = element_text(size = 30, face="bold", color="orangered"))+
+  theme(plot.subtitle = element_text(face = "italic", color="wheat", size = 15))+
   theme(plot.background = element_rect(fill = "black"))+
   theme(legend.title = element_text(color = "wheat"),
   legend.text = element_text(color = "white"))+
