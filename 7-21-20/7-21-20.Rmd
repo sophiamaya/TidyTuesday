@@ -10,9 +10,29 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
+library(tidytuesdayR)
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r}
 tuesdata <- tidytuesdayR::tt_load('2020-07-21')
 tuesdata <- tidytuesdayR::tt_load(2020, week = 30)
 
 animal_outcomes <- tuesdata$animal_outcomes
 ```
 
+```{r}
+outcomes_tidy <- animal_outcomes %>%
+  select(year, animal_type, outcome, Total)%>%
+  group_by(animal_type, year)
+```
+
+```{r}
+#tidy the data so we have counts for each type of outcome
+outcomes <-ggplot(outcomes_tidy, aes(x=year, y=Total, fill=animal_type))+
+  geom_line()+
+  facet_wrap(~animal_type)
+
+outcomes
+```
